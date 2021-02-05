@@ -55,4 +55,4 @@ client.on('session', function(session) {
 })
 
 client.write(JSON.stringify({'message': "I am the client sending you a message."}));
-client.write(JSON.stringify({'jacob': "Jacob data"}));
+client.write(JSON.stringify({'event': 'jacob', 'data': "Jacob data"}));

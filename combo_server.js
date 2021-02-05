@@ -10,33 +10,30 @@ const HOST = CONF["tls-server-address"];
 const socketCallbacks = require("./socket_callbacks");
 const utils = require('./utils/utils');
 
+const udpStart = require('./test_udp_server');
+
+global.clients = [];
+global.remoteUDP = {};
+
 var options = {
     key: fs.readFileSync('.tls/private-key.pem'),
     cert: fs.readFileSync('.tls/public-cert.pem'),
     rejectUnauthorized: false //Only because we are using self signed certs!!!
 };
+const message = Buffer.from(`Jacob says hello from the udp server!`);
 
-global.clients = [];
+// var udpServer = new ();
+
+setInterval( function() {
+    if(remoteUDP.address) {
+        udpStart.send(message, remoteUDP.port, remoteUDP.address, (err) => {
+        });
+    }
+  }, 750);
 
 var websocket = tls.createServer(options, function(socket) {
-
-    socketCallbacks(socket, CONF);
-
+    socketCallbacks(socket);
     // socket.write("I am the websocket server sending you a message.");
-
-    socket.on('secureConnect', () => {
-        console.log("A new secure socket has been established...");
-    });
-
-    socket.on('end', function() {
-        console.log('EOT (End Of Transmission)');
-    });
-
-    socket.on('error', (err) => {
-        console.log("Socket error: " + err);
-        socket.destroy();
-    });
-
 });
 
 websocket.on('secureConnection', (tlsSocket) => {
