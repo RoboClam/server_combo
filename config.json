@@ -2,7 +2,7 @@
     "udp-server-address": "127.0.0.1",
     "udp-server-port": 41234,
     "udp-client-address": "127.0.0.1",
-    "udp-client-port": 0,
+    "udp-client-port": 41233,
     "tls-server-address": "127.0.0.1",
     "tls-server-port": 1337,
     "tls-client-address": "127.0.0.1",
