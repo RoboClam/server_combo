@@ -1,4 +1,6 @@
 const dgram = require("dgram");
+const PORT = require("./config.json")['udp-server-port'];
+const ADDRESS = require("./config.json")['udp-server-address'];
 const server = dgram.createSocket('udp4');
 
 server.on('error', (err) => {
@@ -15,4 +17,4 @@ server.on('listening', () => {
     console.log(`server listening on: ${address.address}:${address.port}`);
 });
 
-server.bind(41234);
+server.bind(PORT);
