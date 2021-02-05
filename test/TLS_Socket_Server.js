@@ -3,12 +3,12 @@
 var tls = require('tls');
 var fs = require('fs');
 
-const PORT = require("./config.json")["tls-server-port"];
-const HOST = require("./config.json")["tls-server-address"];
+const PORT = require("../config.json")["tls-server-port"];
+const HOST = require("../config.json")["tls-server-address"];
 
 var options = {
-    key: fs.readFileSync('.tls/private-key.pem'),
-    cert: fs.readFileSync('.tls/public-cert.pem')
+    key: fs.readFileSync('../.tls/private-key.pem'),
+    cert: fs.readFileSync('../.tls/public-cert.pem')
 };
 
 var server = tls.createServer(options, function(socket) {

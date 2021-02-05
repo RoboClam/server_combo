@@ -1,6 +1,6 @@
 const dgram = require("dgram");
-const PORT = require("./config.json")['udp-server-port'];
-const ADDRESS = require("./config.json")['udp-server-address'];
+const PORT = require("../config.json")['udp-server-port'];
+const ADDRESS = require("../config.json")['udp-server-address'];
 
 const server = dgram.createSocket('udp4');
 

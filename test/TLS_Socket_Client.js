@@ -3,13 +3,13 @@
 var tls = require('tls');
 var fs = require('fs');
 
-const PORT = require("./config.json")["tls-server-port"];
-const HOST = require("./config.json")["tls-server-address"];
+const PORT = require("../config.json")["tls-server-port"];
+const HOST = require("../config.json")["tls-server-address"];
 
 // Pass the certs to the server and let it know to process even unauthorized certs.
 var options = {
     // key: fs.readFileSync('.tls/private-key.pem'),
-    cert: fs.readFileSync('.tls/public-cert.pem'),
+    cert: fs.readFileSync('../.tls/public-cert.pem'),
     rejectUnauthorized: false //Only because we are using self signed certs!!!
 };
 

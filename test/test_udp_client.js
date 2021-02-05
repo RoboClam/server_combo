@@ -1,9 +1,9 @@
 const dgram = require('dgram');
 
-const DESTINATION_PORT = require("./config.json")['udp-server-port'];
-const DESTINATION_ADDRESS = require("./config.json")['udp-server-address'];
-const LOCAL_PORT = require("./config.json")['udp-client-port'];
-const LOCAL_ADDRESS = require("./config.json")['udp-client-address'];
+const DESTINATION_PORT = require("../config.json")['udp-server-port'];
+const DESTINATION_ADDRESS = require("../config.json")['udp-server-address'];
+const LOCAL_PORT = require("../config.json")['udp-client-port'];
+const LOCAL_ADDRESS = require("../config.json")['udp-client-address'];
 
 const message = Buffer.from(`Jacob says hello from the client!`);
 
