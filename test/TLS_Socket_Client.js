@@ -9,7 +9,7 @@ const HOST = require("../config.json")["tls-server-address"];
 // Pass the certs to the server and let it know to process even unauthorized certs.
 var options = {
     // key: fs.readFileSync('.tls/private-key.pem'),
-    cert: fs.readFileSync('../.tls/public-cert.pem'),
+    cert: fs.readFileSync('./.tls/public-cert.pem'),
     rejectUnauthorized: false //Only because we are using self signed certs!!!
 };
 
@@ -54,5 +54,7 @@ client.on('session', function(session) {
     console.log("client session?");
 })
 
-client.write(JSON.stringify({'message': "I am the client sending you a message."}));
-client.write(JSON.stringify({'event': 'jacob', 'data': "Jacob data"}));
+setInterval( function() {
+    client.write(JSON.stringify({'message': "I am the client sending you a message."}));
+    client.write(JSON.stringify({'event': 'jacob', 'data': "Jacob data"}));
+  }, 12500);

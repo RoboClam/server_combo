@@ -14,7 +14,7 @@ var options = {
     rejectUnauthorized: false //Only because we are using self signed certs!!!
 };
 
-let websocket = tls.createServer(options, function(socket) {
+const websocket = tls.createServer(options, function(socket) {
     socketCallbacks(socket);
     // socket.write("I am the websocket server sending you a message.");
 });
@@ -33,3 +33,5 @@ websocket.on('error', function(error) {
 websocket.listen(PORT, HOST, function() {
     console.log("I'm listening at %s, on port %s", HOST, PORT);
 });
+
+module.exports = websocket;
