@@ -3,8 +3,12 @@
 var tls = require('tls');
 var fs = require('fs');
 
-const PORT = require("./config.json")["tls-server-port"];
-const HOST = require("./config.json")["tls-server-address"];
+const CONF = require("./config.json");
+const PORT = CONF["tls-server-port"];
+const HOST = CONF["tls-server-address"];
+
+const socketCallbacks = require("./socket_callbacks");
+const utils = require('./utils/utils');
 
 var options = {
     key: fs.readFileSync('.tls/private-key.pem'),
@@ -12,18 +16,16 @@ var options = {
     rejectUnauthorized: false //Only because we are using self signed certs!!!
 };
 
-var server = tls.createServer(options, function(socket) {
+global.clients = [];
 
-    socket.write("I am the websocket server sending you a message.");
+var websocket = tls.createServer(options, function(socket) {
+
+    socketCallbacks(socket, CONF);
+
+    // socket.write("I am the websocket server sending you a message.");
 
     socket.on('secureConnect', () => {
         console.log("A new secure socket has been established...");
-    })
-
-    socket.on('data', function(data) {
-        console.log('Received: %s [it is %d bytes long]',
-            data.toString().replace(/(\n)/gm,""),
-            data.length);
     });
 
     socket.on('end', function() {
@@ -37,18 +39,19 @@ var server = tls.createServer(options, function(socket) {
 
 });
 
-server.listen(PORT, HOST, function() {
+websocket.on('secureConnection', (tlsSocket) => {
+    console.log("A new secure connection has been established...");
+    console.log(tlsSocket.remoteAddress + ":" + tlsSocket.remotePort);
+    utils.addToClientList(tlsSocket.remoteAddress, tlsSocket.remotePort);
+});
+
+websocket.on('error', function(error) {
+    console.error("Websocket Error: " + error);
+    websocket.destroy();
+});
+
+websocket.listen(PORT, HOST, function() {
     console.log("I'm listening at %s, on port %s", HOST, PORT);
 });
 
-server.on('secureConnection', (tlsSocket) => {
-    console.log("A new secure connection has been established...");
-    console.log(tlsSocket.remoteAddress + ":" + tlsSocket.remotePort);
-
-})
-
-server.on('error', function(error) {
-    console.error(error);
-    server.destroy();
-});
 

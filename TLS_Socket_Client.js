@@ -21,8 +21,6 @@ var client = tls.connect(PORT, HOST, options, function() {
         console.log("Connection not authorized: " + client.authorizationError)
     }
 
-    // client.write("I am the client sending you a message.");
-
 });
 
 client.on("data", function(data) {
@@ -31,7 +29,7 @@ client.on("data", function(data) {
         data.toString().replace(/(\n)/gm,""),
         data.length);
 
-    client.end();
+    // client.end();
 
 });
 
@@ -48,3 +46,13 @@ client.on('error', function(error) {
     client.destroy();
 
 });
+
+client.on('ready', function() {
+    console.log("client ready?");
+});
+client.on('session', function(session) {
+    console.log("client session?");
+})
+
+client.write(JSON.stringify({'message': "I am the client sending you a message."}));
+client.write(JSON.stringify({'jacob': "Jacob data"}));
