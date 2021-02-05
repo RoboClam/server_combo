@@ -3,8 +3,9 @@
 var tls = require('tls');
 var fs = require('fs');
 
-const PORT = require("./config.json")["tls-server-port"];
-const HOST = require("./config.json")["tls-server-address"];
+const DESTINATION_PORT = require("./config.json")["tls-server-port"];
+const DESTINATION_HOST = require("./config.json")["tls-server-address"];
+const LOCAL_PORT = require("./config.json")["tls-client-port"];
 
 // Pass the certs to the server and let it know to process even unauthorized certs.
 var options = {
@@ -13,7 +14,7 @@ var options = {
     rejectUnauthorized: false //Only because we are using self signed certs!!!
 };
 
-var client = tls.connect(PORT, HOST, options, function() {
+var client = tls.connect(DESTINATION_PORT, DESTINATION_HOST, options, function() {
 
     if (client.authorized) {
         console.log("Connection authorized by a Certificate Authority.");
@@ -30,8 +31,6 @@ client.on("data", function(data) {
     console.log('Received: %s [it is %d bytes long]',
         data.toString().replace(/(\n)/gm,""),
         data.length);
-
-    client.end();
 
 });
 

@@ -6,5 +6,5 @@
     "tls-server-address": "127.0.0.1",
     "tls-server-port": 1337,
     "tls-client-address": "127.0.0.1",
-    "tls-client-port": 0
+    "tls-client-port": 1338
 }

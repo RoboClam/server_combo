@@ -3,7 +3,7 @@ const PORT = require("./config.json")['udp-server-port'];
 const ADDRESS = require("./config.json")['udp-server-address'];
 const server = dgram.createSocket('udp4');
 
-const message = Buffer.from(`Jacob says hello from the server!`);
+const message = Buffer.from(`Jacob says hello from the udp server!`);
 let remote;
 
 server.on('error', (err) => {
